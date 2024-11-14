@@ -1,0 +1,14 @@
+#ansible variables with play book
+---
+- name: play books with variables
+  hosts: all
+  become: true
+#here menction the variable
+  vars:
+   user: deveuser1
+  tasks:
+  - name: create user
+    user:
+  #here it will call the variable what ever information we are menction it will fretch it
+      name: "{{user}}"
+  

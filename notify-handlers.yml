@@ -1,0 +1,19 @@
+#avoid dependency by using  the condition notify and handlers
+---
+- name: install httpd with ansible playbook
+  hosts: all
+  become: true
+  tasks:
+  - name: install httpd
+    yum:
+      name: httpd
+      state: installed
+#task one once complete the task inform to another task
+    notify: start service
+#where you whant to notify second task
+  handlers:
+#when ever we are starting the service it will try to notify with the help of handlers
+  - name: start service
+    service:
+      name: httpd
+      state: started

@@ -1,0 +1,42 @@
+#when condition for each task based on the parameters trying to execute and also copy the html from one place to another
+---
+- name : install httpd with ansible paly book
+  hosts: all
+  become: true
+  tasks:
+#first task
+  - name: install httpd
+  #linux serves we use yum command
+    yum:
+      name: httpd
+      state: installed
+  # condition this tasks should execute only specific service (ansible-os-family=redhat) all linux servers
+    when: ansible-os-family=="RedHat"
+  -name: start service
+  service:
+    name: httpd
+    state: started
+  #task should start in ansible os family (linux servers)
+  when: ansible-os-family=="RedHat"
+#second task
+- name: install apache 2
+  apt: 
+    name: apache2
+    state: present
+ # condition this tasks should execute only specific service (ansible-os-family=Debian) all ubuntu servers
+  when: ansible-os-family=="Debian"
+- name: start service
+  service:
+    name: apache2
+    start: started
+ #task should start in ansible os family (ubuntu servers)
+  when: ansible-os-family=="Debian"
+#copy the html file from one place to another 
+- name: copy index.html
+  copy:
+  #master server path (source)
+    src: /opt/ansible/index.html
+  #where you want place this (destination)
+    dest: /var/www/html
+  #while copying this we need some permisions
+    mode: 0777

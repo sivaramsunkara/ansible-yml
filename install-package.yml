@@ -1,0 +1,9 @@
+---
+- name: install packages with ansible playbook
+  hosts: all
+  become: true
+  tasks:
+  - name: install git
+    yum:
+      name: git
+      state: installed

@@ -1,0 +1,12 @@
+#install multiple packages with single task
+---
+- name: install multiple packages
+#instad of applying all here i am using groups like web
+  hosts: web
+  become: true
+  tasks:
+  -name: install packages
+  yum:
+  #here i am using list 
+    name: ["git","gzit","tree"]
+    state: installed

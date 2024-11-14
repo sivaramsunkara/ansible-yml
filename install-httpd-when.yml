@@ -1,0 +1,36 @@
+#when condition for each task based on the parameters trying to execute
+---
+- name : install httpd with ansible paly book
+  hosts: all
+  become: true
+  tasks:
+#first task
+  - name: install httpd
+  #linux serves we use yum command
+    yum:
+      name: httpd
+      state: installed
+  # condition this tasks should execute only specific service (ansible-os-family=redhat) all linux servers
+    when: ansible-os-family=="RedHat"
+  -name: start service
+  service:
+    name: httpd
+    state: started
+  #task should start in ansible os family (linux servers)
+  when: ansible-os-family=="RedHat"
+#second task
+- name: install apache 2
+  apt: 
+    name: apache2
+    state: present
+ # condition this tasks should execute only specific service (ansible-os-family=Debian) all ubuntu servers
+  when: ansible-os-family=="Debian"
+- name: start service
+  service:
+    name: apache2
+    start: started
+ #task should start in ansible os family (ubuntu servers)
+  when: ansible-os-family=="Debian"
+
+
+    
