@@ -1,0 +1,13 @@
+#here using the variable file
+---
+- name: create user with ansible play book
+  hosts: all
+  become: true
+#try to call the variable files from another file 
+  vars_files:
+  - myuser.yml
+  tasks:
+  - name: create user
+    user:
+  #this value refering from the variable file
+      name: "{{user}}"
